@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void printField(int** arr, int rows, int cols) {
+void printField(char** arr, int rows, int cols) {
 	for(int r = 0; r < rows; ++r) {
 		for(int c = 0; c < cols; ++c) {
 			cout << arr[r][c] << "  ";
@@ -12,16 +12,21 @@ void printField(int** arr, int rows, int cols) {
 	}
 }
 
+void addFrame()  {
+	
+}
+
 void findMines(string inputFile) {
 	ifstream readInput;
 	readInput.open(inputFile);
 	int rows = 0;
 	int columns = 0;
-	string value = "";
+	char value;
 	readInput >> rows >> columns;
-	string* field = new int[rows];
+	char** field;
+	field = new char*[rows];
 	for(int i = 0; i < rows; ++i)
-		field[i] = new int[columsn]();
+		field[i] = new char[columns]();
 
 	for(int r = 0; r < rows; ++r) {
 		for(int c = 0; c < columns; ++c) {
@@ -29,13 +34,12 @@ void findMines(string inputFile) {
 			field[r][c] = value;
 		}
 	}
-	printField(field);
-
+	printField(field, rows, columns);
 }
 
 int main(int argc, char* argv[]) {
 
-	if(argc != 1) {
+	if(argc != 2) {
 		cout << "Needs an inputFile, Terminating\n";
 		return 0;
 	}
