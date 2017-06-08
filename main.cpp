@@ -4,6 +4,7 @@
 using namespace std;
 
 void printField(char** arr, int rows, int cols) {
+	
 	for(int r = 0; r < rows + 2; ++r) {
 		for(int c = 0; c < cols + 2; ++c) {
 			cout << arr[r][c] << "  ";
@@ -13,6 +14,7 @@ void printField(char** arr, int rows, int cols) {
 }
 
 void addFrame(char** arr, int rows, int cols)  {
+
 	int rowSize = rows + 2; 
 	int colSize = cols + 2;
 	for(int i = 0; i < rowSize; ++i) {
@@ -23,6 +25,7 @@ void addFrame(char** arr, int rows, int cols)  {
 }
 
 void findMines(string inputFile) {
+
 	ifstream readInput;
 	readInput.open(inputFile);
 	int rows = 0;
