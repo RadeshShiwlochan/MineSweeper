@@ -6,13 +6,13 @@ using namespace std;
 void printField(string** arr, int rows, int cols, int count) {
 
 	cout << "Field #" << count << ":\n";
-	for(int r = 0; r < rows + 2; ++r) {
-		for(int c = 0; c < cols + 2; ++c) {
+	for(int r = 1; r < rows + 1; ++r) {
+		for(int c = 1; c < cols + 1; ++c) {
 			cout << arr[r][c];
 		}
 		cout << endl;
 	}
-	cout << endl << endl;
+	cout << endl;
 }
 
 void addFrame(string** arr, int rows, int cols)  {
@@ -27,6 +27,7 @@ void addFrame(string** arr, int rows, int cols)  {
 }
 
 void countAdjMines(string** arr, int rows, int cols) {
+
 	int count = 0;
 	int tempVal = 0;
 	string value = "";
