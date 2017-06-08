@@ -4,16 +4,22 @@
 using namespace std;
 
 void printField(char** arr, int rows, int cols) {
-	for(int r = 0; r < rows; ++r) {
-		for(int c = 0; c < cols; ++c) {
+	for(int r = 0; r < rows + 2; ++r) {
+		for(int c = 0; c < cols + 2; ++c) {
 			cout << arr[r][c] << "  ";
 		}
 		cout << endl;
 	}
 }
 
-void addFrame()  {
-	
+void addFrame(char** arr, int rows, int cols)  {
+	int rowSize = rows + 2; 
+	int colSize = cols + 2;
+	for(int i = 0; i < rowSize; ++i) {
+		for(int j = 0; j < colSize; ++j) {
+			arr[i][j] = '#';
+		}
+	}
 }
 
 void findMines(string inputFile) {
@@ -24,12 +30,14 @@ void findMines(string inputFile) {
 	char value;
 	readInput >> rows >> columns;
 	char** field;
-	field = new char*[rows];
-	for(int i = 0; i < rows; ++i)
-		field[i] = new char[columns]();
 
-	for(int r = 0; r < rows; ++r) {
-		for(int c = 0; c < columns; ++c) {
+	field = new char*[rows + 2];
+	for(int i = 0; i < rows + 2; ++i)
+		field[i] = new char[columns + 2]();
+
+	addFrame(field, rows, columns);
+	for(int r = 1; r < rows + 1; ++r) {
+		for(int c = 1; c < columns + 1; ++c) {
 			readInput >> value;
 			field[r][c] = value;
 		}
