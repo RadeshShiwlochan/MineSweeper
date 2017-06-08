@@ -3,14 +3,16 @@
 
 using namespace std;
 
-void printField(string** arr, int rows, int cols) {
+void printField(string** arr, int rows, int cols, int count) {
 
+	cout << "Field #" << count << ":\n";
 	for(int r = 0; r < rows + 2; ++r) {
 		for(int c = 0; c < cols + 2; ++c) {
-			cout << arr[r][c] << "  ";
+			cout << arr[r][c];
 		}
 		cout << endl;
 	}
+	cout << endl << endl;
 }
 
 void addFrame(string** arr, int rows, int cols)  {
@@ -19,7 +21,7 @@ void addFrame(string** arr, int rows, int cols)  {
 	int colSize = cols + 2;
 	for(int i = 0; i < rowSize; ++i) {
 		for(int j = 0; j < colSize; ++j) {
-			arr[i][j] = "#";
+			arr[i][j] = "";
 		}
 	}
 }
@@ -63,23 +65,29 @@ void findMines(string inputFile) {
 	readInput.open(inputFile);
 	int rows = 0;
 	int columns = 0;
+	int countOfField = 0;
 	char value;
-	readInput >> rows >> columns;
 	string** field;
 
-	field = new string*[rows + 2];
-	for(int i = 0; i < rows + 2; ++i)
-		field[i] = new string[columns + 2]();
+	while(readInput >> rows >> columns) {
+		if(rows == 0 && columns == 0)
+			return;	
+		countOfField++;
+		field = new string*[rows + 2];
+		for(int i = 0; i < rows + 2; ++i)
+			field[i] = new string[columns + 2]();
 
-	addFrame(field, rows, columns);
-	for(int r = 1; r < rows + 1; ++r) {
-		for(int c = 1; c < columns + 1; ++c) {
-			readInput >> value;
-			field[r][c] = value;
+		addFrame(field, rows, columns);
+		for(int r = 1; r < rows + 1; ++r) {
+			for(int c = 1; c < columns + 1; ++c) {
+				readInput >> value;
+				field[r][c] = value;
+			}
 		}
+		countAdjMines(field, rows + 1, columns + 1);
+		printField(field, rows, columns, countOfField);
 	}
-	countAdjMines(field, rows + 1, columns + 1);
-	printField(field, rows, columns);
+	    delete field;
 }
 
 int main(int argc, char* argv[]) {
