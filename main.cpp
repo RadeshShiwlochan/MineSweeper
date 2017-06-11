@@ -2,7 +2,8 @@
 #include <fstream>
 using namespace std;
 
-void printField(string** arr, int rows, int cols, int count) {
+void printField(ofstream& printToFile, string** arr, int rows, 
+	                                     int cols, int count) {
 /**
 	This function prints the result of the field array. The field
 	array is initialize with amount of rows + 2 and amount of
@@ -10,14 +11,14 @@ void printField(string** arr, int rows, int cols, int count) {
 	frame hence why it prints from 1 to number of rows + 1 and 
 	number of columns + 1
 */
-	cout << "Field #" << count << ":\n";
+	printToFile << "Field #" << count << ":\n";
 	for(int r = 1; r < rows + 1; ++r) {
 		for(int c = 1; c < cols + 1; ++c) {
-			cout << arr[r][c];
+			printToFile << arr[r][c];
 		}
-		cout << endl;
+		printToFile << endl;
 	}
-	cout << endl;
+	printToFile << endl;
 }
 
 void initializeField(string** arr, int rows, int cols)  {
@@ -56,17 +57,17 @@ void countAdjMines(string** arr, int rows, int cols) {
 			if(arr[r][c] != "*") {
 				if(arr[r - 1][c - 1] == "*" )
 					count++;
-				if(arr[r - 1][c] == "*") 
+				if(arr[r - 1][c]     == "*") 
 					count++;
 				if(arr[r - 1][c + 1] == "*") 
 					count++;
-				if(arr[r][c - 1] == "*") 
+				if(arr[r][c - 1]     == "*") 
 					count++;
-				if(arr[r][c + 1] == "*")
+				if(arr[r][c + 1]     == "*")
 					count++;
 				if(arr[r + 1][c - 1] == "*")
 					count++;
-				if(arr[r + 1][c] == "*")
+				if(arr[r + 1][c]     == "*")
 					count++;
 				if(arr[r + 1][c + 1] == "*")
 					count++;
@@ -79,7 +80,7 @@ void countAdjMines(string** arr, int rows, int cols) {
 	}//for rows
 }
 
-void findMines(string inputFile) {
+void findMines(string inputFile, string outputFile) {
 /**
 	primary function that finds all mines in adjacent positions
 	-read in number of rows and columns
@@ -92,6 +93,8 @@ void findMines(string inputFile) {
 */
 	ifstream readInput;
 	readInput.open(inputFile);
+	ofstream printToFile;
+	printToFile.open(outputFile);
 	int rows = 0;
 	int columns = 0;
 	int countOfField = 0;
@@ -125,19 +128,21 @@ void findMines(string inputFile) {
 		//count the mines in the input read in
 		countAdjMines(field, rows + 1, columns + 1);
 		//print the result
-		printField(field, rows, columns, countOfField);
+		printField(printToFile, field, rows, columns, countOfField);
 	}
 		//delete the field array
 	    delete field;
+	    //close the file
+	    readInput.close();
 }
 
 int main(int argc, char* argv[]) {
-	//check to make sure an input file is provided
-	if(argc != 2) {
+	//check to make sure an input and output file is provided
+	if(argc != 3) {
 		cout << "Needs an inputFile, Terminating\n";
 		return 0;
 	}
 	//call the findMines with the input file
-	findMines(argv[1]);
+	findMines(argv[1], argv[2]);
 	return 0;
 }
