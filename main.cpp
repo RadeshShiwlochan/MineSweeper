@@ -102,8 +102,13 @@ void findMines(string inputFile, string outputFile) {
 	string** field;
 
 	while(readInput >> rows >> columns) {
-		//if rows and columns are 0, quit program, end of input
-		if(rows == 0 && columns == 0)
+		/**
+			-if rows and columns are 0, quit program, end of input.
+			-check constraints of program
+		*/
+		if((rows == 0 && columns == 0   )   || 
+		   (rows < 1 && rows > 100      )   || 
+		   (columns < 1 && columns > 100)     )
 			return;	
 		//countOfField: keeps track of the amount of input,field number
 		countOfField++;
